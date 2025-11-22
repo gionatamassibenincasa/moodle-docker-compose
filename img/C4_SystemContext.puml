@@ -1,0 +1,21 @@
+@startuml C4_Context
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title System Context Diagram - Moodle Platform
+
+Person(User, "Utente Moodle", "Studente, Insegnante, Amministratore")
+System(Moodle, "Piattaforma Moodle", "Sistema di E-Learning e Gestione Corsi")
+System(LetsEncrypt, "CA", "Autorita' di Certificazione per SSL")
+System(MailClient, "Client di Posta Elettronica", "Riceve notifiche (es. reset password)")
+System(DBAdmin, "Amministrazione Database", "Amministratore che gestisce il DB tramite phpMyAdmin")
+' Da fare: aggiungere CodeRunner come sistema esterno
+System(JobE, "Esecutore di processi", "Esegue i processi di compilazione/interpretazione/esecuzione per CodeRunner")
+
+Rel(User, Moodle, "Accede e utilizza", "HTTPS")
+Rel(Moodle, MailClient, "Invia notifiche via", "SMTP")
+Rel(Moodle, LetsEncrypt, "Certificato da", "ACME Challenge (tramite Webserver)")
+Rel(DBAdmin, Moodle, "Gestisce le risorse del DB tramite", "HTTPS (Porta 9090)")
+' Da fare: aggiungere relazione con CodeRunner
+Rel(Moodle, JobE, "Invia richieste di compilazione/interpretazione/esecuzione a", "HTTPS")
+
+@enduml

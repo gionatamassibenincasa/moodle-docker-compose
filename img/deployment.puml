@@ -1,0 +1,74 @@
+@startuml Deployment Diagram: Moodle su Docker
+
+skinparam componentStyle uml2
+skinparam cloudBorderThickness 2
+skinparam databaseBorderThickness 2
+skinparam nodeBorderThickness 2
+
+title Diagramma di Deployment: Piattaforma Moodle
+
+cloud "Internet" as internet
+
+node "Docker Host (Server Fisico/VM)" as host {
+
+    node "Rete Frontend (Esposta)" as frontend_net {
+        artifact "Porta 80/443" as http_https
+        artifact "Porta 9090 (PMA)" as pma_port
+    }
+
+    node "Rete Backend (Interna)" as backend_net {
+
+        database "Database Persistente (Volume db)" as db_vol
+        database "Dati Moodle (Volume moodle-data)" as data_vol
+        database "Certificati SSL (Volume certbot-etc)" as cert_vol
+
+        component "Database Server" as db_comp <<MariaDB/MySQL>> {
+            db_comp -- db_vol : uses
+        }
+        
+        component "Redis Cache" as redis_comp <<Cache>>
+
+        component "Moodle Applicazione" as moodle_comp <<PHP-FPM>> {
+            moodle_comp --> db_comp : Reads/Writes
+            moodle_comp --> redis_comp : Caching
+            moodle_comp -- data_vol : R/W
+        }
+
+        component "Web Server / Proxy" as web_comp <<Apache HTTPD>> {
+            web_comp --> moodle_comp : Proxy Pass (9000)
+            web_comp -- cert_vol : Uses
+        }
+
+        component "Certbot" as cert_comp <<Let's Encrypt Client>> {
+            cert_comp -- cert_vol : Updates
+        }
+        
+        component "phpMyAdmin" as pma_comp <<Web UI>> {
+            pma_comp --> db_comp : Manages
+            pma_comp -- cert_vol : Uses
+        }
+
+        component "MailHog" as mail_comp <<SMTP Catcher>>
+
+        component "Backup Utility" as backup_comp <<Cron Job>> {
+            backup_comp -- db_vol : Backs up
+            backup_comp -- data_vol : Backs up
+        }
+    }
+}
+
+' Connessioni di Rete e Flusso Esterno
+internet -right-> frontend_net : HTTP/HTTPS
+frontend_net --> web_comp : 80/443
+frontend_net --> pma_comp : 9090
+
+web_comp --> backend_net
+pma_comp --> backend_net
+moodle_comp --> backend_net
+db_comp --> backend_net
+redis_comp --> backend_net
+cert_comp --> backend_net
+mail_comp --> backend_net
+backup_comp --> backend_net
+
+@enduml

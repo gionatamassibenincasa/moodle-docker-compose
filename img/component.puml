@@ -1,0 +1,89 @@
+@startuml Component Diagram: Moodle Architecture
+
+skinparam componentStyle uml2
+skinparam databaseBorderThickness 2
+
+title Diagramma dei Componenti: Moodle con Docker Compose
+
+package "Infrastruttura di Supporto" {
+
+    component "Database" as DB {
+        interface "3306/MySQL" as mysql_if
+    }
+    
+    component "Redis" as REDIS {
+        interface "6379/Cache" as redis_if
+    }
+
+    component "MailHog" as MAIL {
+        interface "1025/SMTP" as smtp_if
+        interface "8025/Web UI" as mail_ui
+    }
+
+    component "Certbot" as CERT {
+        interface "Volumi SSL" as ssl_vol_if
+    }
+
+    component "Backup" as BACKUP
+}
+
+package "Piattaforma Web" {
+
+    component "Moodle" as MOODLE <<PHP-FPM>> {
+        interface "9000/FPM" as fpm_if
+        interface "Volumi Dati" as moodle_data_if
+    }
+
+    component "Webserver" as WEB <<Apache HTTPD>> {
+        interface "80/HTTP" as http_if
+        interface "443/HTTPS" as https_if
+    }
+    
+    component "phpMyAdmin" as PMA <<Web UI>> {
+        interface "443/HTTPS (9090)" as pma_if
+    }
+}
+
+' Relazioni tra Componenti e Interfacce
+
+' Moodle App
+MOODLE -left-> fpm_if : espone
+MOODLE ..> mysql_if : richiede (dipendenza)
+MOODLE ..> redis_if : richiede (cache)
+MOODLE ..> smtp_if : richiede (email)
+MOODLE -- moodle_data_if : accede
+
+' Database
+DB -up-> mysql_if : fornisce
+
+' Redis
+REDIS -up-> redis_if : fornisce
+
+' Mail
+MAIL -up-> smtp_if : fornisce
+MAIL -up-> mail_ui : fornisce
+
+' Webserver
+WEB ..> fpm_if : usa (Proxy Pass)
+WEB -up-> http_if : fornisce (esterno)
+WEB -up-> https_if : fornisce (esterno)
+WEB ..> ssl_vol_if : usa (Certificati)
+
+' phpMyAdmin
+PMA -up-> pma_if : fornisce (esterno)
+PMA ..> mysql_if : richiede (gestione DB)
+PMA ..> ssl_vol_if : usa (Certificati)
+
+' Certbot
+CERT -up-> ssl_vol_if : fornisce (Volumi)
+
+' Backup
+BACKUP --> DB : Dump SQL
+BACKUP --> MOODLE : Copia Dati
+
+' Dipendenze implicite di Healthcheck (solo testo)
+note bottom of MOODLE : Depends on DB (healthy)
+note bottom of WEB : Depends on Moodle (healthy)
+note bottom of PMA : Depends on Certbot (healthy)
+
+@enduml

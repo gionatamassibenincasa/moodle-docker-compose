@@ -1,6 +1,6 @@
-# [full stack apache2 Moodle for everyone with docker compose](https://github.com/damalis/full-stack-apache2-moodle-for-everyone-with-docker-compose)
+# [Full Stack Apache2 Moodle per tutti con Docker Compose](https://github.com/damalis/full-stack-apache2-moodle-for-everyone-with-docker-compose)
 
-If You want to build a website with Moodle "moodle" at short time; 
+Se vorrai costruire una sito con Moodle **moodle** in tempo breve;
 
 #### Full stack Apache2 Moodle "moodle":
 <p align="left">
@@ -20,15 +20,18 @@ If You want to build a website with Moodle "moodle" at short time;
 <a href="https://www.offen.dev/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/47735043?s=200&v=4" alt="backup" height="35" width="35"/> </a>
 </p>
 
-Plus, manage docker containers with Portainer.
 
-#### Supported CPU architectures:
+In più, gestisci container Docker con Portainer.
+
+#### Architetture CPU supportate:
 <p align="left"> arm64/aarch64, x86-64 </p>
 
-#### Supported Linux Package Manage Systems:
+
+#### Gestori pacchetti Linux supportati:
 <p align="left"> apk, dnf, yum, apt/apt-get, zypper, pacman </p>
- 
-#### Supported Linux Operation Systems:
+
+
+#### Distribuzioni Linux supportate:
 <p align="left">
 <a href="https://alpinelinux.org/" target="_blank" rel="noreferrer"> <img src="https://avatars.githubusercontent.com/u/7600810?s=200&v=4" alt="alpine linux" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
 <a href="https://fedoraproject.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/github/explore/e6b1e7f0fb8d0bf920bd719c7289243138bdc1b4/topics/fedora/fedora.png" alt="fedora" height="40" width="40"/> </a>&nbsp;&nbsp;&nbsp; 
@@ -41,9 +44,10 @@ Plus, manage docker containers with Portainer.
 <a href="https://archlinux.org/" target="_blank" rel="noreferrer"> <img src="https://gitlab.archlinux.org/uploads/-/system/group/avatar/23/iconfinder_archlinux_386451.png?width=48" alt="arch linux" height="40" width="40"/> </a>
 </p>
 
-##### Note: Fedora 37, 39 and alpine linux x86-64 compatible, could not try sles IBM Z s390x, rhel IBM Z s390x and raspberrypi.
 
-#### With this project you can quickly run the following:
+##### Note: Compatibile con Fedora 37, 39 e alpine linux x86-64, non è stato possibile provare SLES per il sistema su IBM Z (s390x), RHEL per il sistema su IBM Z (s390x) e Raspberry Pi.
+
+#### Con questo progetto puoi eseguire:
 
 - [Moodle](https://github.com/moodle) - [php-fpm](https://hub.docker.com/_/php?tab=tags&page=1&name=fpm)
 - [webserver (apache2/httpd)](https://hub.docker.com/_/httpd)
@@ -54,90 +58,95 @@ Plus, manage docker containers with Portainer.
 - [mailhog](https://github.com/mailhog)
 - [backup](https://hub.docker.com/r/offen/docker-volume-backup)
 
-#### For certbot (letsencrypt) certificate:
+#### Per il certificato di certbot (letsencrypt):
 
-- [Set DNS configuration of your domain name](https://support.google.com/a/answer/48090?hl=en)
+- [Configura la configurazione del DNS per il tuo nome di dominio](https://support.google.com/a/answer/48090?hl=en)
 
-#### IPv4/IPv6 Firewall
-Create rules to open ports to the internet, or to a specific IPv4 address or range.
+#### Firewall IPv4/IPV6
+Crea regole per aprire porte verso il web, o ad un indirizzo IP v4 specifico o ranges.
 
 - http: 80
 - https: 443
 - portainer: 9001
 - phpmyadmin: 9090
 
-#### Contents:
+#### Indice:
 
-- [Auto Configuration and Installation](#automatic)
-- [Manual Configuration and Installation](#manual)
-	- [Requirements](#requirements)
-	- [Configuration](#configuration)
-	- [Installation](#installation)
-- [Portainer Installation](#portainer)
-- [Usage](#usage)
-	- [Website](#website)
-	- [Webserver](#webserver)
-	- [Redis](#redis)
-	- [Mail](#mail)
-	- [phpMyAdmin](#phpmyadmin)
-	- [backup](#backup)					  
+- [Auto Configurazione e Installazione](#configurazione_automatica)
+- [Configurazione Manuale e Installazione](#manuale)
+  - [Requisiti](#requisiti)
+  - [Configurazione](#configurazione)
+  - [Installazione](#installazione)
+- [Installazione di Portainer](#portainer)
+- [Uso](#uso)
+  - [Sito Web](#sito-web)
+  - [Server Web](#server-web)
+  - [Redis](#redis-1)
+  - [Mail](#mail-1)
+  - [phpMyAdmin](#phpmyadmin-1)
+  - [Backup](#backup)
 
-### Automatic
+### Configurazione Automatica
 
-#### Exec install shell script for auto installation and configuration
+#### Esecuzione del shell script per l'installazione e configurazione automatiche
 
-download with
-
-```
-git clone https://github.com/damalis/full-stack-apache2-moodle-for-everyone-with-docker-compose.git
-```
-
-Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
+download con
 
 ```
-cd full-stack-apache2-moodle-for-everyone-with-docker-compose
+git clone https://github.com/gionatamassibenincasa/moodle-docker-compose.git
+```
+
+Apri una finestra del terminale e `cd` nel directory in cui `docker-compose.yml` è salvato ed esegui:
+
+```
+cd moodle-docker-compose
 chmod +x install.sh
 ./install.sh
 ```
 
-### Manual
+### Manuale
 
-#### Requirements
+#### Requisiti
 
-Make sure you have the latest versions of **Docker** and **Docker Compose** installed on your machine and require up to 2 GB of RAM.
+Assicurati di avere le versioni più recenti di **Docker** e **Docker Compose** installate sul tuo dispositivo e richiedano fino a 2 GB di memoria.
 
-- [How install docker](https://docs.docker.com/engine/install/)
-- [How install docker compose](https://docs.docker.com/compose/install/)
+- [Come installare docker](https://docs.docker.com/engine/install/)
+- [Come installare docker compose](https://docs.docker.com/compose/install/)
 
-Clone this repository or copy the files from this repository into a new folder.
+Copia questo repository o clona i file da questo repository in una nuova directory.
 
-Make sure to [add your user to the `docker` group](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
+Assicurati di aggiungere il tuo utente al gruppo `docker` [come descritto qui](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
 
-#### Configuration
+#### Configurazione
 
-download with
+download con
 ```
-git clone https://github.com/damalis/full-stack-apache2-moodle-for-everyone-with-docker-compose.git
-```
-
-Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved and run:
-
-```
-cd full-stack-apache2-moodle-for-everyone-with-docker-compose
+git clone https://github.com/gionatamassibenincasa/moodle-docker-compose.git
 ```
 
-Copy the example environment into `.env`
+Apri una terminale e scendi nel directory in cui si trova il file `docker-compose.yml`, quindi esegui:
+```
+cd /path/to/folder
+docker-compose
+``` 
+Sostituisci `/path/to/folder` con la path reale al tuo folder.
+
+```
+cd moodle-docker-compose
+```
+
+Copia l'esempio dell'ambiente nel file `.env`
 
 ```
 cp env.example .env
 ```
 
-Edit the `.env` file to change values of
+Modifica il file `.env` per cambiare i valori di
 
-|```LOCAL_TIMEZONE```|```DOMAIN_NAME```|```DIRECTORY_PATH```|```LETSENCRYPT_EMAIL```|
-|```DB_USER```|```DB_PASSWORD```|```DB_NAME```|```DB_TABLE_PREFIX```|```MYSQL_ROOT_PASSWORD```|```DATABASE_IMAGE_NAME```|
-|```DATABASE_CONT_NAME```|```DATABASE_PACKAGE_MANAGER```|```DATABASE_ADMIN_COMMANDLINE```|```PMA_CONTROLUSER```|```PMA_CONTROLPASS```|
-|```PMA_HTPASSWD_USERNAME```|```PMA_HTPASSWD_PASSWORD```|```SSL_SNIPPET```|
+|`LOCAL_TIMEZONE`|`DOMAIN_NAME`|`DIRECTORY_PATH`|`LETSENCRYPT_EMAIL`|
+|`DB_USER`|`DB_PASSWORD`|`DB_NAME`|`DB_TABLE_PREFIX`|`MYSQL_ROOT_PASSWORD`|`DATABASE_IMAGE_NAME`|
+|`DATABASE_CONT_NAME`|`DATABASE_PACKAGE_MANAGER`|`DATABASE_ADMIN_COMMANDLINE`|`PMA_CONTROLUSER`|`PMA_CONTROLPASS`|
+|`PMA_HTPASSWD_USERNAME`|`PMA_HTPASSWD_PASSWORD`|`SSL_SNIPPET`|
 
 <table><thead>
   <tr>
@@ -195,64 +204,65 @@ Edit the `.env` file to change values of
 </tbody>
 </table>
 
-and
+
+e
 
 ```
 cp ./webserver/extra/httpd-ssl.conf.template ./webserver/extra/httpd-ssl.conf
 ```
 
-change `example.com` to your domain name in ```./webserver/extra/httpd-ssl.conf``` file.
+cambia `example.com` col nome del tuo dominio nel file `./webserver/extra/httpd-ssl.conf`.
 
 ```
 cp ./phpmyadmin/apache2/sites-available/default-ssl.sample.conf ./phpmyadmin/apache2/sites-available/default-ssl.conf
 ```
 
-change `example.com` to your domain name in ```./phpmyadmin/apache2/sites-available/default-ssl.conf``` file.
-
+cambia `example.com` col nome del tuo dominio nel file `./phpmyadmin/apache2/sites-available/default-ssl.conf`.
 ```
 cp ./database/phpmyadmin/sql/create_tables.sql.template.example ./database/phpmyadmin/sql/create_tables.sql.template
 ```
 
-change `pma_controluser` and `db_authentication_password` in ```./database/phpmyadmin/sql/create_tables.sql.template``` file.
+modifica `pma_controluser` e `db_authentication_password` nel file `./database/phpmyadmin/sql/create_tables.sql.template`.
 
-#### Installation
+#### Installazione
 
-Firstly: will create external volume
+Prima di tutto: verrà creato unVolume esterno
 
 ```
 docker volume create --driver local --opt type=none --opt device=${PWD}/certbot --opt o=bind certbot-etc
 ```
 
-Localhost ssl: Generate Self-signed SSL Certificate with guide [mkcert repository](https://github.com/FiloSottile/mkcert).
+Localhost SSL: Genera un Certificato SSL auto-firmato come da guida [mkcert](https://github.com/FiloSottile/mkcert).
 
 ```
 docker compose up -d
 ```
 
-then reloading for webserver ssl configuration
+quindi ricarica la configurazione SSL del server web
 
 ```
 docker container restart webserver
 ```
 
-The containers are now built and running. You should be able to access the Moodle installation with the configured IP in the browser address. `https://example.com`.
+I container sono stati compilati e stanno eseguendo.
+Ora dovresti essere in grado di accedere all'istanza di Moodle attraverso il browser, utilizzando l'IP configurato nella barra degli indirizzi.
 
-For convenience you may add a new entry into your `hosts` file.
+Per convenienza puoi aggiungere una nuova entry al tuo file `/etc/hosts`.
 
 ### Portainer
 
 ```
 docker compose -f portainer-docker-compose.yml -p portainer up -d 
 ```
-manage docker with [Portainer](https://www.portainer.io/) is the definitive container management tool for Docker, Docker Swarm with it's highly intuitive GUI and API. 
+gestisci Docker con [Portainer](https://www.portainer.io/), è uno strumento di gestione dei contenitori per Docker, compatibile con Docker Swarm grazie alla sua interfaccia utente e alle API.
 
-You can also visit `https://example.com:9001` to access portainer after starting the containers.
+Puoi anche visitare [https://example.com:9001](https://example.com:9001) per accedere a Portainer dopo aver avviato i container.
 
-### Usage
+### Uso
 
-#### You could manage docker containers without command line with portainer.
 
-#### Here’s a quick reference of commonly used Docker Compose commands
+
+#### Ecco una riferimento veloce ai comuni comandi di Docker Compose
 
 ```
 docker ps -a	# Lists all containers managed by the compose file
@@ -302,21 +312,21 @@ docker rmi $(docker image ls -q)	# Removes portainer and the other images
 docker container logs container_name_or_id	# Shows logs from all services
 ```
 
-#### Project from existing source
+#### Progetto da sorgente esistente
 
-Copy all files into a new directory:
+Copia tutti i file in una nuova directory:
 
 ```
 docker compose up -d	# Starts services in detached mode (in the background)
 ```
 
-#### Docker run reference
+#### Riferumento a Docker run
 
 [https://docs.docker.com/reference/cli/docker/compose/](https://docs.docker.com/reference/cli/docker/compose/)
 
-#### Website
+#### Sito Web
 
-You should see the "Home" page in your browser. If not, please check if your PHP installation satisfies Moodle's requirements.
+Selezionate la pagina "Home" nel vostro browser. Se non è visibile, verificate se l'installazione di PHP soddisfa le esigenze di Moodle.
 
 ```
 https://example.com
@@ -327,11 +337,12 @@ Username: admin
 Password: admin123
 ```
 
-add or remove code in the ./php-fpm/php/conf.d/security.ini file for custom php.ini configurations
+Aggiungi o rimuovi codice nel file `./php-fpm/php/conf.d/security.ini` per configurazioni personalizzate del file `php.ini`
 
-[https://www.php.net/manual/en/configuration.file.php](https://www.php.net/manual/en/configuration.file.php)
 
-You should make changes custom host configurations ```./php-fpm/php-fpm.d/z-www.conf``` then must restart service, FPM uses php.ini syntax for its configuration file - php-fpm.conf, and pool configuration files.
+[https://www.php.net/manual.en.configuration.file.php](https://www.php.net/manual/en/configuration.file.php)
+
+Dovresti fare modifiche alle configurazioni personalizzate del host `[./php-fpm/php-fpm.d/z-www.conf]`, quindi dovrai riavviare il servizio. FPM utilizza la sintassi di `php.ini` per il suo file di configurazione - `php-fpm.conf`, e i files di configurazione delle pool di processo.
 
 [https://www.php.net/manual/en/install.fpm.configuration.php](https://www.php.net/manual/en/install.fpm.configuration.php)
 
@@ -339,12 +350,12 @@ You should make changes custom host configurations ```./php-fpm/php-fpm.d/z-www.
 docker container restart moodle
 ```
 
-add and/or remove moodle site folders and files with any ftp client program in ```./moodle/moodle``` folder.
-<br />You can also visit `https://example.com` to access website after starting the containers.
+aggiungi o rimuovi le cartelle e i file del sito Moodle con qualsiasi programma di gestione FTP nella directory `/./moodle/moodle`.
+<br />Puoi anche accedere alla pagina web attraverso `https://example.com` dopo aver avviato i container.
 
-#### Webserver
+#### Web server
 
-add or remove code in the ```./webserver/extra/httpd-ssl.conf``` file for custom apache2/httpd configurations.
+aggiungi o rimuovi codice nel file `./webserver/extra/httpd-ssl.conf` per configurazioni personalizzate di Apache2/HTTPd.
 
 [https://httpd.apache.org/docs/2.4/](https://httpd.apache.org/docs/2.4/)
 
@@ -367,32 +378,31 @@ $CFG->session_redis_lock_expire = 7200;              // Optional, defaults to se
 $CFG->session_redis_lock_retry = 100; 
 ```
 
-add the above code in the ```./moodle/moodle/config.php``` file.
+aggiungi il codice sopra nel file `./moodle/moodle/config.php`.
 
 [https://docs.moodle.org/500/en/Redis_cache_store#Configuring_Redis_in_Moodle](https://docs.moodle.org/500/en/Redis_cache_store#Configuring_Redis_in_Moodle)
 
 #### Mail
 
-SMTP settings: |```Host: mail, Port: 1025```|
+SMTP impostazioni: |`Host: mail, Port: 1025`|
 
-The authorize screen, ```username: ${PMA_HTPASSWD_USERNAME}``` and ```password: ${PMA_HTPASSWD_PASSWORD}``` in the `.env` file.
+La schermata di autorizzazione, **username**: `${PMA_HTPASSWD_USERNAME}` e **password**: `${PMA_HTPASSWD_PASSWORD}` nel file `.env`.
 
 #### phpMyAdmin
 
-You can add your own custom config.inc.php settings (such as Configuration Storage setup) by creating a file named config.user.inc.php with the various user defined settings in it, and then linking it into the container using:
+Puoi aggiungere le proprie impostazioni personalizzate del file `config.inc.php` (`es. Configurazione di Archiviazione`) creando un file chiamato `config.user.inc.php` con le diverse impostazioni definite dal utente, e poi collegarlo al contenitore utilizzando:
 
 ```
 ./phpmyadmin/config.user.inc.php
 ```
 
-You can also visit `https://example.com:9090` to access phpMyAdmin after starting the containers.
 
-The first authorize screen(htpasswd;username or password) and phpmyadmin login screen the username and the password is the same as supplied in the `.env` file.
+Il primo schermo di autorizzazione (htpasswd;username o password) e il schermo di accesso a phpMyAdmin usano lo stesso nome utente e password forniti nel file `.env`.
 
 #### backup
 
-This will back up the all files and folders in database/dump sql and html volumes, once per day, and write it to ```./backups``` with a filename like backup-2023-01-01T10-18-00.tar.gz
+Questo farà il restore di tutti i files e sottocartelle nel database/dump sql e html volumi, una sola volta al giorno, e scriverà in `/./backups` con un nome del file come backup-2023-01-01T10-18-00.tar.gz
 
-##### can run on a custom cron schedule
+##### può eseguirsi su un orario cron personalizzato
 
-```BACKUP_CRON_EXPRESSION: '20 01 * * *'``` the UTC timezone.
+`BACKUP_CRON_EXPRESSION: '20 01 * * *'` nel orario UTC.

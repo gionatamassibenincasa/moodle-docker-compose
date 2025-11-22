@@ -1,0 +1,32 @@
+@startuml C4_Component
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title C3: Component Diagram for Moodle Application (PHP-FPM Container)
+
+Container_Boundary(c1, "Moodle Applicazione (PHP-FPM Container)") {
+
+    Component(Core, "Core System", "Moodle PHP Code", "Gestione Utenti, Corsi, Logica Principale.")
+    Component(CLI, "CLI Interface", "PHP Scripts", "Esecuzione di Cron e Installazione (admin/cli/install.php, cron.php).")
+    Component(Config, "Configuration Manager", "Config.php", "Memorizza le impostazioni di connessione DB e Root WWW.")
+    Component(Plugins, "Plugins & Modules", "PHP Code", "Estensioni di funzionalita (Activity Modules, Themes).")
+    Component(FPM, "PHP-FPM", "Process Manager", "Gestisce i worker PHP, interfaccia per Webserver.")
+
+    Rel(FPM, Core, "Processa le richieste tramite")
+    Rel(Core, CLI, "Richiama funzionalita amministrative")
+    Rel(Core, Config, "Legge i parametri di")
+    Rel(Core, Plugins, "Carica le funzionalita da")
+
+    ' Interfacce esterne del Container
+    Boundary(External_Resources, "Risorse Esterne") {
+        System(Database, "Database")
+        System(Redis, "Redis Cache")
+        System(DataDir, "Moodledata Volume")
+    }
+
+    Rel(Core, Database, "Legge/Scrive")
+    Rel(Core, Redis, "Cache Dati")
+    Rel(Core, DataDir, "Scrive file (Utenti, Uploads)")
+    Rel(CLI, Database, "Interagisce con")
+}
+
+@enduml

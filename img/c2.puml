@@ -1,0 +1,34 @@
+@startuml C4_Container
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title C2: Container Diagram for Moodle Platform
+
+System_Boundary(c1, "Piattaforma Moodle") {
+
+    Container(Webserver, "Webserver", "Apache HTTPD Container", "Gestisce il traffico in entrata (80/443), Reverse Proxy per Moodle/Certbot.")
+    Container(MoodleApp, "Moodle Applicazione", "PHP-FPM Container", "Esegue la logica di Moodle e PHP.")
+    Container(Database, "Database", "MySQL/MariaDB Container", "Memorizza i dati strutturati di Moodle.")
+    Container(Redis, "Redis", "Redis Container", "Fornisce la cache di sessione e dati.")
+    Container(phpMyAdmin, "phpMyAdmin", "phpMyAdmin Container", "Interfaccia web per la gestione del Database (Esposta su porta 9090).")
+    Container(MailHog, "MailHog", "MailHog Container", "Cattura le email in uscita per testing.")
+    Container(Certbot, "Certbot", "Certbot Container", "Gestisce il ciclo di vita dei certificati SSL (Let's Encrypt).")
+    Container(Backup, "Backup", "offen/docker-volume-backup", "Esegue il backup periodico dei volumi principali.")
+
+    Rel(Webserver, MoodleApp, "Proxy Pass", "HTTP (9000)")
+    Rel(Webserver, Certbot, "Controlla", "Volumi/ACME Challenge")
+    Rel(MoodleApp, Database, "Legge e Scrive Dati", "MySQL/MariaDB (3306)")
+    Rel(MoodleApp, Redis, "Legge e Scrive", "Cache/Sessioni (6379)")
+    Rel(MoodleApp, MailHog, "Invia", "Email (1025)")
+    Rel(phpMyAdmin, Database, "Gestisce", "MySQL/MariaDB (3306)")
+    Rel(Backup, Database, "Esegue Dump e Archivia", "Volumi (db, moodle-data)")
+}
+
+Person(User, "Utente Moodle")
+System(LetsEncrypt, "Let's Encrypt CA")
+
+Rel(User, Webserver, "Accede tramite", "HTTPS (443)")
+Rel(Webserver, LetsEncrypt, "Verifica la proprietà del dominio", "ACME Challenge")
+Rel(User, phpMyAdmin, "Accede all'amministrazione", "HTTPS (9090)")
+Rel(User, MailHog, "Visualizza la posta intercettata", "HTTP (8025)")
+
+@enduml
